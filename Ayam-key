@@ -1,0 +1,618 @@
+-- AYAM HUB v10 (Delta) + Key Harian
+-- Dibuat oleh: Anjirr
+
+-- ===== KEY SYSTEM =====
+local VALID_KEYS_LIST = {
+	"On1rprp98I", "kUeEhQ2HcE", "eST2O2W3lf", "cubnzjPGCI", "fJH3Us2Vh1", "agBniyYwtR", "pt7PkCGL4o", "zBHROHFZLN",
+	"YX6wFzmXHS", "a1y3J2N6Zb", "NwdOgndAly", "1vQywLHN9D", "vb8OD7hQwc", "ptcFZhKRM0", "UxA8a6tnCr", "DAalPqxLMe",
+	"5CmC12Cq7r", "3zErNzVS61", "VfwhD97VF7", "HkeZ6AhrOf", "nVk8FHH5Fr", "ov0N2GFpPm", "3ENBSyBGTY", "LcJzTqlewa",
+	"wPPpSIP2Df", "BcPpWE4LrB", "qzZH3HSnAk", "t5IEFFgYqp", "NfUBM4STep", "nSqRu1eqJe", "Wsp3x9jgns", "K7tGV5CM8c",
+	"wsGv9d1KFj", "uTsvrwzS9O", "UyjBSRQsAc", "EOVPRxaa1w", "m4vHjrm8Oi", "oOYLnxOh4F", "YSQM7E0PSU", "cW5D7i6wXp",
+	"6sdjPZobqM", "FtttmrkvsM", "Snb3Ejg9k9", "58wJLpB8CQ", "dWkoK4dP7p", "wBc7qTRfcI", "ZBZWpvsHgl", "FE3r67RVPN",
+	"IDaRvGo4ZG", "QLnQXA0cwr", "ZlJm8jJnDh", "alOzeF4D09", "g3DnFt936X", "5jtZUZvvpt", "BCZ9tFXzq4", "OuiSVYzN2u",
+	"VnRK3G1urW", "VPQBabvmUl", "A7RyJJS8k8", "rqrnaIrvAZ", "TtdS8W0v7u", "S5ntVW934E", "yQg4RLVLD0", "C3grFRljdP",
+	"qLIchSqDRA", "uMowEVa91J", "rC6HEBVEOk", "cD3rl815VK", "N3dEA3707Y", "fQMNsepO5S", "5lcKafF5vh", "J60nWv4hIZ",
+	"DQpNbfhbPM", "vY8p35BFgx", "pMQWxyZGGM", "HXXT64DHmw", "WMyJKig75f", "ChMAR6Arm3", "sJnKRpw4Ca", "TY7MEvUYZ2",
+	"rjbbIMq8PN", "ASTmdxAHqB", "vh1TOnjgJi", "4O48fmvm3H", "5caeS0l48v", "QBp8VmHCJX", "EPDYlBlzaX", "YKN2ylJMql",
+	"fwKJcOjDAK", "nMhuiQP9Rl", "rsqzTqc630", "opjIqRdfgK", "uoD4VAsQ47", "BDlBFRqYuv", "Uip19BdjwR", "oeLz7t7brA",
+	"aVteQ5lTV5", "T7FwB2JFtu", "SLtLdsZ63b", "8LURyI6FII", "9QyALOI1Jc", "hHKvJQP8gS", "HEhZqiNgVR", "egfRNtshVn",
+	"kEpNKTgCLl", "cy4DLUvHrm", "xgTeArkuZv", "4j1cWC2ZQt", "1FSFJpkLBW", "g9k3SxypiH", "YAx43IWn6v", "b7iVm7xUXm",
+	"j91Q4GdHzz", "kmXp33KMpR", "BHvP54wuIM", "3h36Zil2rZ", "6RmAe4Ay7z", "oEsnao2M6w", "0mgdgRq7Sc", "VJkSWSY61K",
+	"ktGmwucsRI", "wkwCxFU1V3", "lw4eTgXFGX", "kWvrvU8vTw", "I916aQ7rMG", "6seuBPA3lv", "yV9ng9OeFS", "zkC6BP6cBy",
+	"2q7Wwtqks2", "clvPCH5JgX", "PfjgMsbRH2", "U04djPMA55", "1xrVbhA3KB", "IQMbP9Ptq4", "0Q3qmLi83c", "kBNiiTYIjB",
+	"jSdOGe4JXL", "98hLEHBtPz", "iRpQdH96BF", "VpKvoZHgRr", "IHbkbahxfK", "IbqLNEKiD7", "XpqoE1K24a", "CC6dgAjvdy",
+	"2PtDsJOn5I", "WQzkbtTReL", "wBoDtPGma9", "3yNZI3VJCg", "Y4VUkr52UC", "rAI9cyiKBr", "hvzjYfTD3m", "TD5hpe2WX7",
+	"3CIM3s47e5", "vTagBsu811", "DotvmwUVTm", "Cfu9Kyytrk", "p40S2S18CW", "nff7V7MpON", "9gIq6othmc", "X4kDTYkseE",
+	"PKKR76rWZF", "2cAjmdGO50", "lJjJAL3rRC", "yvMUPetsIR", "iwt7rQ6bY3", "tIn8G3T5hT", "1Az9UA0Q2A", "UTvWEbTjaI",
+	"cexEa8TdU6", "WfQolBpaF3", "ZMWwbsaf5B", "r5IqZJzeto", "k9wcZDJYhz", "bRrlcSwMxm", "v2SWCZxWGx", "jRuZvTW0Kg",
+	"zk7tRfrvV9", "sHUWv2I4dI", "W6TUSn61Pw", "5eLg8xVEY2", "f8VEsrgmms", "sgFFmzoOTf", "ovxMR5rQSH", "O1lrAFxTuv",
+	"Lh5lQH4BqP", "n1qUATvb8V", "pn9fL2bZIm", "4kvytytZag", "Snp6jXRvIZ", "3QTx58dg5S", "yMMsoWIB9p", "ay4A3bnbZS",
+	"HVgNxkBg86", "KBY7zHOxx2", "TEEWZeUSOX", "x9nqFludKt", "gaNtM8cBkJ", "DFwWuSDKqH", "bERib4qB9L", "Oc0pdZmLid",
+}
+local VALID = {}
+for _, k in ipairs(VALID_KEYS_LIST) do VALID[k] = true end
+local DURATION = 86400 -- key berlaku 1 hari (24 jam) sejak pertama dipakai
+local FILE = "ayamhub_key.txt"
+
+local function readStore()
+	local store = {}
+	local ok, data = pcall(function() return isfile and isfile(FILE) and readfile(FILE) end)
+	if ok and data then
+		for k, t in data:gmatch("([^|\n]+)|(%d+)") do store[k] = tonumber(t) end
+	end
+	return store
+end
+local function writeStore(store)
+	local lines = {}
+	for k, t in pairs(store) do table.insert(lines, k .. "|" .. t) end
+	pcall(function() writefile(FILE, table.concat(lines, "\n")) end)
+end
+local function savedOk()
+	for k, t in pairs(readStore()) do
+		if VALID[k] and os.time() - t < DURATION then return true end
+	end
+	return false
+end
+local function checkKey(input)
+	input = input:gsub("%s", "")
+	if not VALID[input] then return false, "Key salah" end
+	local store = readStore()
+	local t = store[input]
+	if t then
+		if os.time() - t < DURATION then return true end
+		return false, "Key sudah kedaluwarsa"
+	end
+	store[input] = os.time() -- mulai hitung 1 hari dari sekarang
+	writeStore(store)
+	return true
+end
+
+local function StartHub()
+-- ====== SCRIPT AYAM HUB ======
+local CREATOR = "Anjirr"
+
+local CODES = {
+	"LacilBlueBerry", "Zhien", "IronReaper", "EJ(YURU)",
+	"Ascart", "Sweetiee24", "Aetherix", "Monarch",
+	"SUB2MULTIST789", "Heso", "Skywinter86", "Ghelayyy",
+	"Aimyoungs", "GRAYWOLF", "Rujika", "RAGNAROK",
+	"Giovanni_GG", "BERLINHERE23", "reiley", "ERIKSM",
+	"Heartguard", "RaykorBR", "ZARGAKSTONE", "WerNate",
+	"FRanime_OFFICIEL", "Ewaa", "Astral", "Lifauzi",
+	"Shiroo00312_IRONSOUL", "PepCalcot", "Kiota2", "TT_oratttt",
+	"Staysmoovey", "NisardHelpOnlyWoman", "LZZ_019BEST", "Les",
+	"SEYUnever", "Bebek", "Shan", "Freca",
+	"ReyPomuchi", "tony_vt", "ARKANGHEL", "Gryffin",
+	"DEI_Yumeko", "Ryokenn", "Chrisss", "Ryu",
+	"DrekathSenpai", "Lulzsec", "PaPaX", "omjiwa",
+	"Clipz7112", "DanoNano", "MADUNN", "WettySNK",
+	"Taalonely", "Darren", "obe", "Dekday",
+	"PapiJoy", "Qyuu", "Gwynne", "Maniaco_666",
+	"GT_HANNI", "smiley", "Sine", "Marcell",
+	"Markbhatra", "Darkfeniks", "Sneptuno", "Dism",
+	"FannTzy", "ProfGab", "Nothing", "Nyxaria",
+	"ARES", "Deco", "Laplace", "LezoCr",
+	"Maple", "TT_Mentally_ill_K.N", "VeeruChan", "Uzi",
+	"Zeny", "Fujiesane", "Luthador2121", "AAM",
+	"Iuknojo", "RIKUSOULS", "runekify", "Ahjughh",
+	"T3nsei", "Ghifa",
+}
+
+local COOLDOWN = 6 -- detik antar kode (game minta jeda 15 detik)
+local MAX_RETRY = 2 -- ulangi kode yang sama kalau kena "Tindakan terlalu sering"
+
+local Players = game:GetService("Players")
+local VirtualUser = game:GetService("VirtualUser")
+local VIM = game:GetService("VirtualInputManager")
+local GuiService = game:GetService("GuiService")
+local Lighting = game:GetService("Lighting")
+local lp = Players.LocalPlayer
+
+local function getGuiParent()
+	local ok, h = pcall(function() return gethui and gethui() end)
+	if ok and h then return h end
+	local ok2, cg = pcall(function() return game:GetService("CoreGui") end)
+	if ok2 and cg then return cg end
+	return lp:WaitForChild("PlayerGui")
+end
+
+local parent = getGuiParent()
+local old = parent:FindFirstChild("AyamHub")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "AyamHub"
+gui.ResetOnSpawn = false
+gui.Parent = parent
+
+-- ===== Desain baru =====
+local ACCENT = Color3.fromRGB(255, 170, 40)
+local ACCENT2 = Color3.fromRGB(255, 85, 60)
+local BG = Color3.fromRGB(18, 18, 24)
+local BTN = Color3.fromRGB(34, 34, 44)
+local W, H = 240, 214
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, W, 0, H)
+frame.Position = UDim2.new(0.5, -W / 2, 0.15, 0)
+frame.BackgroundColor3 = BG
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 14)
+
+local frameStroke = Instance.new("UIStroke", frame)
+frameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+frameStroke.Color = ACCENT
+frameStroke.Transparency = 0.45
+frameStroke.Thickness = 1.5
+
+-- Banner atas (gradasi)
+local banner = Instance.new("Frame")
+banner.Size = UDim2.new(1, 0, 0, 54)
+banner.BackgroundColor3 = Color3.new(1, 1, 1)
+banner.BorderSizePixel = 0
+banner.Parent = frame
+Instance.new("UICorner", banner).CornerRadius = UDim.new(0, 14)
+
+local grad = Instance.new("UIGradient", banner)
+grad.Color = ColorSequence.new(ACCENT, ACCENT2)
+grad.Rotation = 0
+
+-- Penutup sudut bawah banner (supaya hanya sudut atas yang melengkung)
+local filler = Instance.new("Frame")
+filler.Size = UDim2.new(1, 0, 0, 24)
+filler.Position = UDim2.new(0, 0, 0, 30)
+filler.BackgroundColor3 = Color3.new(1, 1, 1)
+filler.BorderSizePixel = 0
+filler.Parent = banner
+
+local grad2 = Instance.new("UIGradient", filler)
+grad2.Color = ColorSequence.new(ACCENT, ACCENT2)
+grad2.Rotation = 0
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -90, 0, 28)
+title.Position = UDim2.new(0, 16, 0, 6)
+title.BackgroundTransparency = 1
+title.Text = "AYAM HUB"
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.TextColor3 = Color3.new(1, 1, 1)
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 21
+title.Parent = banner
+
+local titleStroke = Instance.new("UIStroke", title)
+titleStroke.Color = Color3.fromRGB(90, 30, 10)
+titleStroke.Transparency = 0.6
+titleStroke.Thickness = 1
+
+local subtitle = Instance.new("TextLabel")
+subtitle.Size = UDim2.new(1, -90, 0, 16)
+subtitle.Position = UDim2.new(0, 16, 0, 33)
+subtitle.BackgroundTransparency = 1
+subtitle.Text = "Auto Redeem Hub | by " .. CREATOR
+subtitle.TextXAlignment = Enum.TextXAlignment.Left
+subtitle.TextColor3 = Color3.fromRGB(255, 244, 225)
+subtitle.Font = Enum.Font.GothamMedium
+subtitle.TextSize = 11
+subtitle.Parent = banner
+
+-- Isi menu
+local body = Instance.new("Frame")
+body.Size = UDim2.new(1, 0, 1, -54)
+body.Position = UDim2.new(0, 0, 0, 54)
+body.BackgroundTransparency = 1
+body.Parent = frame
+
+local statusBar = Instance.new("Frame")
+statusBar.Size = UDim2.new(1, -20, 0, 48)
+statusBar.Position = UDim2.new(0, 10, 1, -58)
+statusBar.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+statusBar.BorderSizePixel = 0
+statusBar.Parent = body
+Instance.new("UICorner", statusBar).CornerRadius = UDim.new(0, 10)
+
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, -16, 1, -8)
+status.Position = UDim2.new(0, 8, 0, 4)
+status.BackgroundTransparency = 1
+status.Text = "Siap"
+status.TextColor3 = Color3.fromRGB(190, 190, 200)
+status.Font = Enum.Font.Gotham
+status.TextSize = 12
+status.TextWrapped = true
+status.Parent = statusBar
+
+local function setStatus(t)
+	status.Text = tostring(t)
+end
+
+local function makeButton(text, y, callback)
+	local b = Instance.new("TextButton")
+	b.Size = UDim2.new(1, -20, 0, 40)
+	b.Position = UDim2.new(0, 10, 0, y)
+	b.BackgroundColor3 = BTN
+	b.TextColor3 = Color3.fromRGB(235, 235, 240)
+	b.Font = Enum.Font.GothamMedium
+	b.TextSize = 14
+	b.Text = text
+	b.BorderSizePixel = 0
+	b.Parent = body
+	Instance.new("UICorner", b).CornerRadius = UDim.new(1, 0)
+	local st = Instance.new("UIStroke", b)
+	st.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	st.Color = ACCENT
+	st.Transparency = 0.7
+	st.Thickness = 1
+	b.Activated:Connect(function() callback(b) end)
+	return b
+end
+
+-- Warna tombol aktif / tidak aktif
+local function paint(b, on)
+	b.BackgroundColor3 = on and ACCENT or BTN
+	b.TextColor3 = on and Color3.fromRGB(30, 20, 8) or Color3.fromRGB(235, 235, 240)
+end
+
+-- Anti DC (cegah ter-kick karena idle / error 278)
+local afkConn
+local dcOn = false
+makeButton("Anti DC: OFF", 12, function(b)
+	if dcOn then
+		dcOn = false
+		if afkConn then
+			afkConn:Disconnect()
+			afkConn = nil
+		end
+		b.Text = "Anti DC: OFF"; paint(b, false)
+		setStatus("Anti DC dimatikan")
+	else
+		dcOn = true
+		afkConn = lp.Idled:Connect(function()
+			VirtualUser:CaptureController()
+			VirtualUser:ClickButton2(Vector2.new())
+		end)
+		task.spawn(function()
+			while dcOn do
+				task.wait(50)
+				if not dcOn then break end
+				pcall(function()
+					VirtualUser:CaptureController()
+					VirtualUser:ClickButton2(Vector2.new())
+				end)
+			end
+		end)
+		b.Text = "Anti DC: ON"; paint(b, true)
+		setStatus("Anti DC aktif")
+	end
+end)
+
+-- ===== Helper UI =====
+local function isVisible(o)
+	local cur = o
+	while cur and cur ~= game do
+		if cur:IsA("GuiObject") and not cur.Visible then return false end
+		if cur:IsA("ScreenGui") and not cur.Enabled then return false end
+		cur = cur.Parent
+	end
+	return true
+end
+
+local function clickAt(obj)
+	local inset = GuiService:GetGuiInset()
+	local p = obj.AbsolutePosition + obj.AbsoluteSize / 2
+	VIM:SendMouseButtonEvent(p.X, p.Y + inset.Y, 0, true, game, 1)
+	task.wait(0.05)
+	VIM:SendMouseButtonEvent(p.X, p.Y + inset.Y, 0, false, game, 1)
+end
+
+local function press(obj)
+	local fired = false
+	if obj:IsA("GuiButton") then
+		for _, sig in ipairs({ "Activated", "MouseButton1Click", "MouseButton1Down", "MouseButton1Up" }) do
+			pcall(function()
+				if getconnections then
+					for _, c in ipairs(getconnections(obj[sig])) do
+						c:Fire()
+						fired = true
+					end
+				end
+			end)
+		end
+		if not fired and firesignal then
+			pcall(function() firesignal(obj.Activated) fired = true end)
+		end
+	end
+	if not fired then
+		fired = pcall(clickAt, obj) -- cadangan: klik layar di posisi tombol
+	end
+	return fired
+end
+
+local KEYS = { "masukkan", "redeem", "klaim", "claim", "submit" }
+
+-- Cari tombol "Masukkan Kode" (bisa TextButton, atau tulisan di dalam tombol/gambar)
+local function findUi()
+	local pg = lp.PlayerGui
+	for _, k in ipairs(KEYS) do
+		for _, v in ipairs(pg:GetDescendants()) do
+			if not v:IsDescendantOf(gui) and (v:IsA("TextButton") or v:IsA("TextLabel")) and isVisible(v) then
+				local t = v.Text:lower()
+				if #t < 30 and t:find(k) then
+					local target = v
+					local cur = v
+					while cur and cur ~= pg do
+						if cur:IsA("GuiButton") then
+							target = cur
+							break
+						end
+						cur = cur.Parent
+					end
+					local root = target:FindFirstAncestorOfClass("ScreenGui") or pg
+					local box
+					for _, d in ipairs(root:GetDescendants()) do
+						if d:IsA("TextBox") and isVisible(d) then
+							box = d
+							break
+						end
+					end
+					return box, target
+				end
+			end
+		end
+	end
+end
+
+-- Jalur UI sebenarnya (dari hasil Scan UI):
+-- MainGui.ScreenDiscordCode.BtnFrmae -> TypeBnt.TextBox (kolom kode) + Confirm (tombol)
+local function findUiDirect()
+	local pg = lp.PlayerGui
+	local main = pg:FindFirstChild("MainGui")
+	local scr = main and main:FindFirstChild("ScreenDiscordCode")
+	local frm = scr and scr:FindFirstChild("BtnFrmae")
+	if not frm then
+		return nil, nil, "Jendela Kode tidak ditemukan di game ini"
+	end
+	if not isVisible(scr) then
+		return nil, nil, "Buka dulu jendela 'Kode!', lalu tekan lagi"
+	end
+	local box = frm:FindFirstChild("TextBox", true)
+	local confirm = frm:FindFirstChild("Confirm")
+	return box, confirm, nil
+end
+
+-- Baca pesan hasil dari layar game
+local function readResult()
+	for _, v in ipairs(lp.PlayerGui:GetDescendants()) do
+		if v:IsA("TextLabel") and not v:IsDescendantOf(gui) and v.TextTransparency < 0.9 and isVisible(v) then
+			local t = v.Text:lower()
+			if t:find("ditebus") then return "ok" end
+			if t:find("tidak ditemukan") then return "notfound" end
+			if t:find("terlalu sering") then return "cooldown" end
+		end
+	end
+end
+
+-- ===== Auto Redeem =====
+local running = false
+makeButton("Auto Redeem", 58, function(b)
+	if running then
+		running = false
+		b.Text = "Auto Redeem"; paint(b, false)
+		setStatus("Dihentikan")
+		return
+	end
+
+	local box, btn, err = findUiDirect()
+	if err then
+		setStatus(err)
+		return
+	end
+	if not box or not btn then
+		setStatus("Kolom atau tombol Confirm tidak ketemu")
+		return
+	end
+
+	running = true
+	b.Text = "Stop"; paint(b, true)
+
+	task.spawn(function()
+		for i, code in ipairs(CODES) do
+			if not running then break end
+			local attempt = 0
+			while running do
+				attempt += 1
+				box.Text = code
+				task.wait(0.5)
+				if not press(btn) then
+					setStatus("Gagal menekan tombol")
+					running = false
+					break
+				end
+
+				local res
+				for _ = 1, 8 do
+					task.wait(0.5)
+					res = readResult()
+					if res then break end
+				end
+
+				if res == "ok" then
+					setStatus(("%d/%d %s: Ditebus!"):format(i, #CODES, code))
+				elseif res == "notfound" then
+					setStatus(("%d/%d %s: Tidak ditemukan"):format(i, #CODES, code))
+				elseif res == "cooldown" and attempt <= MAX_RETRY then
+					setStatus(("%s: kena cooldown, ulangi..."):format(code))
+					task.wait(COOLDOWN)
+					continue
+				else
+					setStatus(("%d/%d %s: terkirim (hasil tidak terbaca)"):format(i, #CODES, code))
+				end
+				break
+			end
+
+			if running and i < #CODES then
+				for s = COOLDOWN, 1, -1 do
+					if not running then break end
+					setStatus(("Jeda %ds sebelum kode berikutnya"):format(s))
+					task.wait(1)
+				end
+			end
+		end
+		if running then setStatus("Semua kode selesai") end
+		running = false
+		b.Text = "Auto Redeem"; paint(b, false)
+	end)
+end)
+
+-- Tombol minimize dan tutup (di banner)
+local function bannerButton(text, xOffset)
+	local b = Instance.new("TextButton")
+	b.Size = UDim2.new(0, 26, 0, 26)
+	b.Position = UDim2.new(1, xOffset, 0, 8)
+	b.BackgroundColor3 = Color3.fromRGB(20, 12, 8)
+	b.BackgroundTransparency = 0.45
+	b.Text = text
+	b.TextColor3 = Color3.new(1, 1, 1)
+	b.Font = Enum.Font.GothamBold
+	b.TextSize = 15
+	b.BorderSizePixel = 0
+	b.Parent = banner
+	Instance.new("UICorner", b).CornerRadius = UDim.new(1, 0)
+	return b
+end
+
+local mini = bannerButton("-", -64)
+local close = bannerButton("X", -34)
+
+-- Bubble kecil "AH" (muncul saat menu diminimize)
+local bubble = Instance.new("TextButton")
+bubble.Size = UDim2.new(0, 52, 0, 52)
+bubble.BackgroundTransparency = 1
+bubble.Text = ""
+bubble.AutoButtonColor = false
+bubble.Active = true
+bubble.Visible = false
+bubble.Parent = gui
+
+local bubbleBg = Instance.new("Frame")
+bubbleBg.Size = UDim2.new(1, 0, 1, 0)
+bubbleBg.BackgroundColor3 = Color3.new(1, 1, 1)
+bubbleBg.BorderSizePixel = 0
+bubbleBg.Parent = bubble
+Instance.new("UICorner", bubbleBg).CornerRadius = UDim.new(1, 0)
+
+local bubbleGrad = Instance.new("UIGradient", bubbleBg)
+bubbleGrad.Color = ColorSequence.new(ACCENT, ACCENT2)
+bubbleGrad.Rotation = 45
+
+local ring = Instance.new("UIStroke", bubbleBg)
+ring.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ring.Color = Color3.new(1, 1, 1)
+ring.Transparency = 0.5
+ring.Thickness = 2
+
+local bubbleText = Instance.new("TextLabel")
+bubbleText.Size = UDim2.new(1, 0, 1, 0)
+bubbleText.BackgroundTransparency = 1
+bubbleText.Text = "AH"
+bubbleText.TextColor3 = Color3.new(1, 1, 1)
+bubbleText.Font = Enum.Font.GothamBlack
+bubbleText.TextSize = 20
+bubbleText.ZIndex = 2
+bubbleText.Parent = bubble
+
+local bubbleStroke = Instance.new("UIStroke", bubbleText)
+bubbleStroke.Color = Color3.fromRGB(90, 30, 10)
+bubbleStroke.Transparency = 0.5
+bubbleStroke.Thickness = 1
+
+-- Minimize: menu hilang, muncul bubble di posisi yang sama
+mini.Activated:Connect(function()
+	bubble.Position = frame.Position
+	frame.Visible = false
+	bubble.Visible = true
+end)
+
+-- Geser dan ketuk bubble (dibuat manual supaya ketukan tidak tertelan)
+local UIS = game:GetService("UserInputService")
+local dragging = false
+local moved = false
+local dragStart, startPos
+
+local function expand()
+	frame.Position = bubble.Position
+	bubble.Visible = false
+	frame.Visible = true
+end
+
+local function isPointer(input)
+	return input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch
+end
+
+bubble.InputBegan:Connect(function(input)
+	if isPointer(input) then
+		dragging = true
+		moved = false
+		dragStart = input.Position
+		startPos = bubble.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+				if not moved then
+					expand() -- ketukan biasa = buka menu
+				end
+			end
+		end)
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if not dragging then return end
+	if input.UserInputType == Enum.UserInputType.MouseMovement
+		or input.UserInputType == Enum.UserInputType.Touch then
+		local d = input.Position - dragStart
+		if d.Magnitude > 8 then moved = true end
+		if moved then
+			bubble.Position = UDim2.new(
+				startPos.X.Scale, startPos.X.Offset + d.X,
+				startPos.Y.Scale, startPos.Y.Offset + d.Y
+			)
+		end
+	end
+end)
+
+close.Activated:Connect(function()
+	running = false
+	dcOn = false
+	if afkConn then afkConn:Disconnect() end
+	gui:Destroy()
+end)
+end
+
+-- ===== Jendela Key =====
+local function getKeyParent()
+	local ok, h = pcall(function() return gethui and gethui() end)
+	if ok and h then return h end
+	local ok2, cg = pcall(function() return game:GetService("CoreGui") end)
+	if ok2 and cg then return cg end
+	return game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+end
+
+local function ShowKeyGui()
+	local kparent = getKeyParent()
+	local oldKey = kparent:FindFirstChild("AyamHubKey")
+	if oldKey then oldKey:Destroy() end
+
+	local keyGui = Instance.new("ScreenGui")
+	keyGui.Name = "AyamHubKey"
+	keyGui.ResetOnSpawn = false
+	keyGui.Parent = kparent
+
+	local kf = Instance.new("Frame")
+	kf.Size = UDim2.new(0, 240, 0, 170)
+	kf.Position = UDim2.new(0.5, -120, 0.25, 0)
+	kf.BackgroundColor3 = Color3
